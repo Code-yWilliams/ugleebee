@@ -160,10 +160,6 @@ aside li {
   }
 }
 
-.header-menu-item {
-  cursor: pointer;
-}
-
 .header-ctas {
   align-items: center;
   display: flex;

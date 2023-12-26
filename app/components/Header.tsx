@@ -1,5 +1,6 @@
 import {Await, NavLink} from '@remix-run/react';
 import {Suspense} from 'react';
+import {CiShoppingCart, CiSearch, CiUser, CiMenuBurger} from 'react-icons/ci';
 import type {HeaderQuery} from 'storefrontapi.generated';
 import type {LayoutProps} from './Layout';
 import {useRootLoaderData} from '~/root';
@@ -12,7 +13,13 @@ export function Header({header, isLoggedIn, cart}: HeaderProps) {
   const {shop, menu} = header;
   return (
     <header className="header">
-      <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
+      <NavLink
+        className="mr-4"
+        prefetch="intent"
+        to="/"
+        style={activeLinkStyle}
+        end
+      >
         <strong>{shop.name}</strong>
       </NavLink>
       <HeaderMenu
@@ -45,18 +52,18 @@ export function HeaderMenu({
   }
 
   return (
-    <nav className={className} role="navigation">
-      {viewport === 'mobile' && (
-        <NavLink
-          end
-          onClick={closeAside}
-          prefetch="intent"
-          style={activeLinkStyle}
-          to="/"
-        >
-          Home
-        </NavLink>
-      )}
+    <nav className="flex justify-between gap-4" role="navigation">
+      <NavLink
+        className="hidden md:block"
+        end
+        onClick={closeAside}
+        prefetch="intent"
+        style={activeLinkStyle}
+        to="/"
+      >
+        Home
+      </NavLink>
+
       {(menu || FALLBACK_HEADER_MENU).items.map((item) => {
         if (!item.url) return null;
 
@@ -69,7 +76,7 @@ export function HeaderMenu({
             : item.url;
         return (
           <NavLink
-            className="header-menu-item"
+            className="hidden md:block"
             end
             key={item.id}
             onClick={closeAside}
@@ -91,30 +98,38 @@ function HeaderCtas({
 }: Pick<HeaderProps, 'isLoggedIn' | 'cart'>) {
   return (
     <nav className="header-ctas" role="navigation">
-      <HeaderMenuMobileToggle />
       <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
-        {isLoggedIn ? 'Account' : 'Sign in'}
+        <CiUser className="h-5 w-5 hover:fill-pink-400" />
       </NavLink>
       <SearchToggle />
       <CartToggle cart={cart} />
+      <HeaderMenuMobileToggle />
     </nav>
   );
 }
 
 function HeaderMenuMobileToggle() {
   return (
-    <a className="header-menu-mobile-toggle" href="#mobile-menu-aside">
-      <h3>☰</h3>
+    <a className="md:hidden" href="#mobile-menu-aside">
+      <CiMenuBurger className="h-5 w-5 hover:fill-pink-400" />
     </a>
   );
 }
 
 function SearchToggle() {
-  return <a href="#search-aside">Search</a>;
+  return (
+    <a href="#search-aside">
+      <CiSearch className="h-5 w-5 hover:fill-pink-400" />
+    </a>
+  );
 }
 
 function CartBadge({count}: {count: number}) {
-  return <a href="#cart-aside">Cart {count}</a>;
+  return (
+    <a href="#cart-aside">
+      <CiShoppingCart className="h-5 w-5 hover:fill-pink-400" />
+    </a>
+  );
 }
 
 function CartToggle({cart}: Pick<HeaderProps, 'cart'>) {

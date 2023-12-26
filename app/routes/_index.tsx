@@ -7,8 +7,15 @@ import type {
   RecommendedProductsQuery,
 } from 'storefrontapi.generated';
 
+import {UGLEEBEE_DESCRIPTION} from '~/constants';
+
 export const meta: MetaFunction = () => {
-  return [{title: 'Hydrogen | Home'}];
+  return [
+    {title: 'Ugleebee | Home'},
+    {
+      description: UGLEEBEE_DESCRIPTION,
+    },
+  ];
 };
 
 export async function loader({context}: LoaderFunctionArgs) {

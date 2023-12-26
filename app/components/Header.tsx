@@ -51,10 +51,18 @@ export function HeaderMenu({
     }
   }
 
+  // these classes let us reuse the same component with diff. styles in mobile & desktop
+  // while also totally hiding the component in mobile view outside of the aside element
+  const navClassName =
+    viewport === 'mobile'
+      ? 'flex flex-col'
+      : 'flex flex-row justify-between gap-4';
+  const navLinkClassName = viewport === 'mobile' ? 'block' : 'hidden md:block';
+
   return (
-    <nav className="flex justify-between gap-4" role="navigation">
+    <nav className={navClassName} role="navigation">
       <NavLink
-        className="hidden md:block"
+        className={navLinkClassName}
         end
         onClick={closeAside}
         prefetch="intent"
@@ -67,7 +75,7 @@ export function HeaderMenu({
       {(menu || FALLBACK_HEADER_MENU).items.map((item) => {
         if (!item.url) return null;
 
-        // if the url is internal, we strip the domain
+        // if the url is internal, strip the domain
         const url =
           item.url.includes('myshopify.com') ||
           item.url.includes(publicStoreDomain) ||
@@ -76,7 +84,7 @@ export function HeaderMenu({
             : item.url;
         return (
           <NavLink
-            className="hidden md:block"
+            className={navLinkClassName}
             end
             key={item.id}
             onClick={closeAside}

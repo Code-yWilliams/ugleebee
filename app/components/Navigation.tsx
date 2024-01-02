@@ -1,7 +1,5 @@
 // this component requires the '@tailwindcss/aspect-ratio' plugin in tailwind config
 
-/* eslint-disable jsx-a11y/anchor-is-valid */
-
 import {Fragment, useState} from 'react';
 import {Dialog, Popover, Tab, Transition} from '@headlessui/react';
 import {
@@ -10,6 +8,7 @@ import {
   ShoppingBagIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
+import {Link} from '@remix-run/react';
 
 const navigation = {
   categories: [
@@ -45,7 +44,7 @@ const navigation = {
       ],
     },
   ],
-  pages: [{name: 'About', href: '/pages/about'}],
+  pages: [{name: 'About', href: '/pages/about', id: 'about-nav'}],
 };
 
 function classNames(...classes: string[]) {
@@ -111,7 +110,8 @@ export default function Navigation({isLoggedIn = false}: Props) {
                               selected
                                 ? 'border-indigo-600 text-indigo-600'
                                 : 'border-transparent text-gray-900',
-                              'flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium',
+                              'flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium outline-none',
+                              'focus:ring-0 focus:ring-offset-0',
                             )
                           }
                         >
@@ -139,16 +139,17 @@ export default function Navigation({isLoggedIn = false}: Props) {
                                   className="object-cover object-center"
                                 />
                               </div>
-                              <a
-                                href={item.href}
+                              <Link
+                                to={item.href}
                                 className="mt-6 block font-medium text-gray-900"
+                                prefetch="intent"
                               >
                                 <span
                                   className="absolute inset-0 z-10"
                                   aria-hidden="true"
                                 />
                                 {item.name}
-                              </a>
+                              </Link>
                               <p aria-hidden="true" className="mt-1">
                                 Shop now
                               </p>
@@ -169,12 +170,13 @@ export default function Navigation({isLoggedIn = false}: Props) {
                             >
                               {section.items.map((item) => (
                                 <li key={item.name} className="flow-root">
-                                  <a
-                                    href={item.href}
+                                  <Link
+                                    to={item.href}
                                     className="-m-2 block p-2 pt-6 text-gray-500"
+                                    prefetch="intent"
                                   >
                                     {item.name}
-                                  </a>
+                                  </Link>
                                 </li>
                               ))}
                             </ul>
@@ -187,43 +189,47 @@ export default function Navigation({isLoggedIn = false}: Props) {
 
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
                   {navigation.pages.map((page) => (
-                    <div key={page.name} className="flow-root">
-                      <a
-                        href={page.href}
+                    <div key={page.name} className="flow-root" id={page.id}>
+                      <Link
+                        to={page.href}
+                        prefetch="intent"
                         className="-m-2 block p-2 font-medium text-gray-900"
                       >
                         {page.name}
-                      </a>
+                      </Link>
                     </div>
                   ))}
                 </div>
 
                 {isLoggedIn ? (
                   <div className="flow-root">
-                    <a
-                      href="/account"
+                    <Link
+                      to="/account"
+                      prefetch="intent"
                       className="-m-2 block p-2 font-medium text-gray-900"
                     >
                       My account
-                    </a>
+                    </Link>
                   </div>
                 ) : (
                   <div className="space-y-6 border-t border-gray-200 px-4 py-6">
                     <div className="flow-root">
-                      <a
-                        href="/account/login"
+                      <Link
+                        to="/account/login"
+                        prefetch="intent"
                         className="-m-2 block p-2 font-medium text-gray-900"
                       >
                         Sign in
-                      </a>
+                      </Link>
                     </div>
                     <div className="flow-root">
-                      <a
-                        href="/account/register"
+                      <Link
+                        to="/account/register"
+                        prefetch="intent"
                         className="-m-2 block p-2 font-medium text-gray-900"
                       >
                         Create account
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 )}
@@ -253,14 +259,14 @@ export default function Navigation({isLoggedIn = false}: Props) {
 
               {/* Logo */}
               <div className="ml-4 flex lg:ml-0">
-                <a href="#">
-                  <span className="sr-only">Your Company</span>
+                <Link to="/">
+                  <span className="sr-only">Ugleebee</span>
                   <img
                     className="h-8 w-auto"
                     src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                     alt=""
                   />
-                </a>
+                </Link>
               </div>
 
               {/* Flyout menus */}
@@ -315,8 +321,9 @@ export default function Navigation({isLoggedIn = false}: Props) {
                                               className="object-cover object-center"
                                             />
                                           </div>
-                                          <a
-                                            href={item.href}
+                                          <Link
+                                            to={item.href}
+                                            prefetch="intent"
                                             className="mt-6 block font-medium text-gray-900"
                                           >
                                             <span
@@ -324,7 +331,7 @@ export default function Navigation({isLoggedIn = false}: Props) {
                                               aria-hidden="true"
                                             />
                                             {item.name}
-                                          </a>
+                                          </Link>
                                           <p
                                             aria-hidden="true"
                                             className="mt-1"
@@ -352,12 +359,13 @@ export default function Navigation({isLoggedIn = false}: Props) {
                                                 key={item.name}
                                                 className="flex"
                                               >
-                                                <a
-                                                  href={item.href}
+                                                <Link
+                                                  to={item.href}
+                                                  prefetch="intent"
                                                   className="hover:text-gray-800"
                                                 >
                                                   {item.name}
-                                                </a>
+                                                </Link>
                                               </li>
                                             ))}
                                           </ul>
@@ -375,13 +383,14 @@ export default function Navigation({isLoggedIn = false}: Props) {
                   ))}
 
                   {navigation.pages.map((page) => (
-                    <a
+                    <Link
                       key={page.name}
-                      href={page.href}
+                      to={page.href}
+                      prefetch="viewport"
                       className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
                     >
                       {page.name}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </Popover.Group>
@@ -389,30 +398,45 @@ export default function Navigation({isLoggedIn = false}: Props) {
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                   {isLoggedIn ? (
-                    <a
-                      href="/account"
-                      className="text-sm font-medium text-gray-700 hover:text-gray-800"
-                    >
-                      My account
-                    </a>
-                  ) : (
                     <>
-                      <a
-                        href="/account/login"
+                      <Link
+                        to="/account"
+                        prefetch="intent"
                         className="text-sm font-medium text-gray-700 hover:text-gray-800"
                       >
-                        Sign in
-                      </a>
+                        My account
+                      </Link>
                       <span
                         className="h-6 w-px bg-gray-200"
                         aria-hidden="true"
                       />
-                      <a
-                        href="/account/register"
+                      <form method="post" action="/account/logout">
+                        <button
+                          type="submit"
+                          className="text-sm font-medium text-gray-700 hover:text-gray-800 hover:underline"
+                        >
+                          Sign out
+                        </button>
+                      </form>
+                    </>
+                  ) : (
+                    <>
+                      <Link
+                        to="/account/login"
+                        className="text-sm font-medium text-gray-700 hover:text-gray-800"
+                      >
+                        Sign in
+                      </Link>
+                      <span
+                        className="h-6 w-px bg-gray-200"
+                        aria-hidden="true"
+                      />
+                      <Link
+                        to="/account/register"
                         className="text-sm font-medium text-gray-700 hover:text-gray-800"
                       >
                         Create account
-                      </a>
+                      </Link>
                     </>
                   )}
                 </div>
@@ -455,5 +479,3 @@ export default function Navigation({isLoggedIn = false}: Props) {
     </div>
   );
 }
-
-/* eslint-enable jsx-a11y/anchor-is-valid */

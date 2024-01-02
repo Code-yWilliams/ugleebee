@@ -192,7 +192,7 @@ export default function Navigation({isLoggedIn = false}: Props) {
                         href={page.href}
                         className="-m-2 block p-2 font-medium text-gray-900"
                       >
-                        {page.name} CUNT
+                        {page.name}
                       </a>
                     </div>
                   ))}
@@ -380,7 +380,7 @@ export default function Navigation({isLoggedIn = false}: Props) {
                       href={page.href}
                       className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
                     >
-                      {page.name} POOP
+                      {page.name}
                     </a>
                   ))}
                 </div>
